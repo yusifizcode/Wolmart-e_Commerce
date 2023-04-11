@@ -1,5 +1,3 @@
-# [wol-mart.com](http://wol-mart.com)
-
 ## Requirements
 
 * asgiref==3.4.1
@@ -31,3 +29,8 @@
 * sqlparse==0.4.2
 * tzdata==2021.5
 * urllib3==1.26.8
+
+## Installing
+```
+pip install -r requirements.txt
+```
