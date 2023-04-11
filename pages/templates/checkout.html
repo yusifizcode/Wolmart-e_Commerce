@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block styleCss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.min.css' %}">
+{% endblock %}
+{% block content %}
+
+        <!-- Start of Main -->
+        <main class="main checkout">
+            <!-- Start of Breadcrumb -->
+            <nav class="breadcrumb-nav">
+                <div class="container">
+                    <ul class="breadcrumb shop-breadcrumb bb-no">
+                        <li class="passed"><a href="{% url 'product:cart' %}">{%trans "Shopping Cart"%}</a></li>
+                        <li class="active"><a href="{% url 'product:checkout' %}">{%trans "Checkout"%}</a></li>
+                        <!-- <li><a href="order.html">Order Complete</a></li> -->
+                    </ul>
+                </div>
+            </nav>
+            <!-- End of Breadcrumb -->
+
+
+            <!-- Start of PageContent -->
+            <div class="page-content">
+                <div class="container">
+                    
+                    <form class="login-content">
+                        <p>{%trans "If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing section."%}</p>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label>{%trans "Username or email"%} *</label>
+                                    <input type="text" class="form-control form-control-md" name="name"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label>{%trans "Password"%} *</label>
+                                    <input type="text" class="form-control form-control-md" name="password"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="form-group checkbox">
+                            <input type="checkbox" class="custom-checkbox" id="remember" name="remember">
+                            <label for="remember" class="mb-0 lh-2">Remember me</label>
+                            <a href="#" class="ml-3">Last your password?</a>
+                        </div> -->
+                        <button class="btn btn-rounded btn-login">{%trans "Login"%}</button>
+                    </form>
+                    
+                    <form class="form checkout-form" action="" method="post">
+                        <div class="row mb-9">
+                            <div class="col-lg-7 pr-lg-4 mb-4">
+                                <h3 class="title billing-title text-uppercase ls-10 pt-1 pb-3 mb-0">
+                                    {%trans "Billing Details"%}
+                                </h3>
+                                
+                                {% comment %} <div class="form-group">
+                                    <label>{%trans "Street address"%} *</label>
+                                    <input type="text" placeholder="House number and street name"
+                                        class="form-control form-control-md mb-2" name="street-address-1" required>
+                                    <input type="text" placeholder="Apartment, suite, unit, etc. (optional)"
+                                        class="form-control form-control-md" name="street-address-2" required>
+                                </div>
+                                <div class="row gutter-sm">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>{%trans "Town / City"%} *</label>
+                                            <input type="text" class="form-control form-control-md" name="town" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>ZIP *</label>
+                                            <input type="text" class="form-control form-control-md" name="zip" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>{%trans "State"%} *</label>
+                                            <input type="text" class="form-control form-control-md" name="zip" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{%trans "Phone"%} *</label>
+                                            <input type="text" class="form-control form-control-md" name="phone" required>
+                                        </div>
+                                    </div>
+                                </div> {% endcomment %}
+                                {% if messageSent %}
+                                <p>{%trans "Thank you. Your order has been received."%}</p>
+                                {% endif %}
+                                <form method='POST'>
+                                    {% csrf_token %}
+                                    {% for field in form %}
+                                    {{ field }}
+                                    {% endfor %}
+                                    
+                                        <button type="submit" class="btn btn-dark btn-block btn-rounded">{%trans "Place Order"%}</button>
+                                    
+                                    
+                                </form>
+                                
+                                
+                                
+
+                                
+                            </div>
+                            <div class="col-lg-5 mb-4 sticky-sidebar-wrapper">
+                                <div class="order-summary-wrapper sticky-sidebar">
+                                    <h3 class="title text-uppercase ls-10">{%trans "Your Order"%}</h3>
+                                    <div class="order-summary">
+                                        <table class="order-table">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="2">
+                                                        <b>{%trans "Product"%}</b>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for item in items %}
+                                                <tr class="bb-no">
+                                                    <td class="product-name">{{item.product.name}} <i
+                                                            class="fas fa-times"></i> <span
+                                                            class="product-quantity">{{item.quantity}}</span></td>
+                                                    <td class="product-total">{{ item.get_total }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                                
+                                            </tbody>
+                                            <tfoot>
+
+                                                <tr class="order-total">
+                                                    <th>
+                                                        <b>{%trans "Total"%}</b>
+                                                    </th>
+                                                    <td>
+                                                        <b>{{order.get_cart_total}}</b>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+
+                                        
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- End of PageContent -->
+        </main>
+        <!-- End of Main -->
+
+        <!-- Start of Footer -->
+{% endblock %}
